@@ -1,0 +1,27 @@
+class Solution:
+    def findMedianSortedArrays(self, nums1, nums2):
+        """
+        :type nums1: List[int]
+        :type nums2: List[int]
+        :rtype: float
+        """
+        m = len(nums1)
+        n = len(nums2)
+        return (self.findKth(nums1, nums2, int((n+m+1)/2)) + self.findKth(nums1, nums2, int((n+m+2)/2)))/2
+    
+    def findKth(self, nums1, nums2, k):
+        m = len(nums1)
+        n = len(nums2)
+        if (m > n):
+            return self.findKth(nums2, nums1, k)
+        if (m == 0):
+            return nums2[k-1]
+        if (k == 1):
+            return min(nums1[0], nums2[0])
+        i = min(m, int(k/2))
+        j = min(n, int(k/2))
+        if (nums1[i-1] > nums2[j-1]):
+            return self.findKth(nums1, nums2[j:], k-j)
+        else:
+            return self.findKth(nums1[i:], nums2, k-i)
+        return 0
