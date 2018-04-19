@@ -1,0 +1,19 @@
+class Solution:
+    def longestPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        if (s is None) or (len(s) == 0):
+            return ""
+        isPal = [[False for i in range(len(s))] for j in range(len(s))]
+        maxlen = 0
+        res = ""
+        for i in range(len(s)-1,-1,-1):
+            for j in range(i,len(s),1):
+                if (s[i] == s[j]) and ((j - i <= 2) or isPal[i+1][j-1] == True):
+                    isPal[i][j] = True
+                    if (maxlen < j-i+1):
+                        maxlen = j-i+1
+                        res = s[i:j+1]
+        return res
