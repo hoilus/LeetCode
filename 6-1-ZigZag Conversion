@@ -1,0 +1,37 @@
+class Solution:
+    def convert(self, s, numRows):
+        """
+        :type s: str
+        :type numRows: int
+        :rtype: str
+        """
+        """
+        0 1 2 3 4 5 6 7 8 9 10 11 12 13
+        P               H
+          A           S   I
+            Y       I       R
+              P   L            I      G
+                A                  N
+        
+        from: https://segmentfault.com/a/1190000005751185
+        magic number = 2n-2
+        """
+        if numRows <= 1:
+            return s
+        if len(s) == 0:
+            return ""
+        magic = 2*numRows - 2
+        res = []
+        initialDistance = magic
+        for i in range(numRows):
+            self.fill(res, i, initialDistance, magic, s)
+            initialDistance -= 2
+        return ''.join(res)
+    
+    def fill(self, res, start, initialDistance, magic, s):
+        while (start < len(s)):
+            if (initialDistance == 0):
+                initialDistance = magic
+            res.append(s[start])
+            start += initialDistance
+            initialDistance = magic - initialDistance
