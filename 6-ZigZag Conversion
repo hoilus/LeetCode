@@ -1,0 +1,44 @@
+class Solution:
+    def convert(self, s, numRows):
+        """
+        :type s: str
+        :type numRows: int
+        :rtype: str
+        """
+        """
+        0 1 2 3 4 5 6 7 8 9 10 11 12 13
+        P               H
+          A           S   I
+            Y       I       R
+              P   L            I      G
+                A                  N
+        
+        layerNumber = 2n-1
+        wavelength/4 = 2n-2
+        """
+        if numRows <= 1:
+            return s
+        if len(s) == 0:
+            return ""
+        layerN = 2*numRows - 1
+        waveLover4 = 2*numRows - 2
+        res = ""
+        for startIndex in range(numRows):
+            if startIndex == 0 or startIndex == numRows - 1:
+                for i in range(int(len(s)/waveLover4)+1):
+                    if startIndex + int(waveLover4*i) < len(s):
+                        res += s[startIndex+int(waveLover4*i)]
+            else:
+                index = startIndex
+                if index < len(s):
+                    res += s[index]
+                for i in range(int(len(s)/waveLover4)+1):
+                    distance1 = waveLover4 - 2*startIndex
+                    index += distance1
+                    if index < len(s):
+                        res += s[index]
+                    distance2 = waveLover4 - distance1
+                    index += distance2
+                    if index < len(s):
+                        res += s[index]
+        return res
