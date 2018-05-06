@@ -22,4 +22,4 @@ class Solution:
                     break
             if len(tmpwords) == 0:
                 res.append(i)
-        return res
+        return res 
