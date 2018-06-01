@@ -10,7 +10,6 @@ public:
             vector<string> updatedVec = updAllVec(board);
             for (int i = 0; i < 9; i++) {
                 for (int j = 0; j < 9; j++) {
-                    cout << board[i][j];
                     if (board[i][j] == '.') {
                         notfilling += 1;
                         string sol1 = possSol(updatedVec[i], updatedVec[9+j], updatedVec[18+(i/3)*3+(j/3)]);
@@ -18,11 +17,38 @@ public:
                             needToUpd += 1;
                             board[i][j] = sol1[0];
                         }
+                        else {
+                            string str1, str2, str3, str4;
+                            if (i%3 == 0) {
+                                str1 = updatedVec[i+1];
+                                str2 = updatedVec[i+2];
+                            } else if (i%3 == 1) {
+                                str1 = updatedVec[i-1];
+                                str2 = updatedVec[i+1];            
+                            } else {
+                                str1 = updatedVec[i-1];
+                                str2 = updatedVec[i-2];
+                            }
+
+                            if (j%3 == 0) {
+                                str3 = updatedVec[9+j+1];
+                                str4 = updatedVec[9+j+2];
+                            } else if (j%3 == 1) {
+                                str3 = updatedVec[9+j-1];
+                                str4 = updatedVec[9+j+2];          
+                            } else {
+                                str3 = updatedVec[9+j-1];
+                                str4 = updatedVec[9+j-2];
+                            }
+                            string sol2 = possSol2(sol1, str1, str2, str3, str4);
+                            if ((sol2.size()) == 1) {
+                                needToUpd += 1;
+                                board[i][j] = sol2[0];
+                            }
+                        }
                     }
                 }
             }
-            cout << endl;
-            cout << notfilling << " " << needToUpd << endl;
         }
 
     }
@@ -63,6 +89,14 @@ public:
         for (auto i : strs)
             if ((st1.find(i) == std::string::npos) && (st2.find(i) == std::string::npos) && (st3.find(i) == std::string::npos))
                 reslt.append(i);
+        return reslt;
+    }
+
+    string possSol2(string strtmp, string str1, string str2, string str3, string str4) {       
+        string reslt;
+        for (int i = 0; i < strtmp.size(); i++)
+            if ((str1.find(strtmp[i]+"") != std::string::npos) && (str2.find(strtmp[i]+"") != std::string::npos) && (str3.find(strtmp[i]+"") != std::string::npos) && (str4.find(strtmp[i]+"") != std::string::npos))
+                reslt.append(strtmp[i]+"");
         return reslt;
     }
 };
